@@ -2,15 +2,20 @@ package etu1904.framework.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Utilitaire;
+import etu1904.framework.Mapping;
+import java.util.HashMap;
+
 
 
 public class FrontServlet extends HttpServlet {
-
+    private HashMap<String , Mapping> mappingUrls = new HashMap<String, Mapping>();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
