@@ -15,6 +15,10 @@ Sur toute les plateformes Utilisant Tomcat
     <servlet>
         <servlet-name>FrontServlet</servlet-name>
         <servlet-class>etu1784.framework.servlet.FrontServlet</servlet-class>
+        <init-param>
+            <param-name>session</param-name>
+            <param-value>Variable session dans HttpSession</param-value>
+        </init-param>
     </servlet>
 
     <servlet-mapping>
@@ -30,7 +34,7 @@ Sur toute les plateformes Utilisant Tomcat
         <b>url</b> = L'url pour l'appeler avec l'extension ".do"</br>
         <b>paramName</b> = les nons des parametres separer par virgule
 ```java
-    @MethodAnnotation( url = "save.do", paramName = "nom,dateNaissance")
+    @ActionMethod( url = "save.do", paramName = "nom,dateNaissance")
     public ModelView test(String nom, String dateNaissance) {
         ...
     }
@@ -39,7 +43,7 @@ Sur toute les plateformes Utilisant Tomcat
 * La classe ModelView a une fonction addItem pour envoyer les donner dans va view que l'on recuperera ex:
 
 ```java
-@MethodAnnotation( url = "getData.do")
+@ActionMethod( url = "getData.do")
 public ModelView getData() {
     ModelView mv = new ModelView();
 
@@ -57,6 +61,15 @@ public ModelView getData() {
 ```
 * Pour l'envoie des données depuis la View vers la model <br>
 Il faut que les nom des paramètres correspond au nom de l'attribut du classe ou le nom de parametre.
+
+* Si on veut qu'une class soit traité comme un singleton il faut l'annoter par:
+```java
+    @Scope( type = ScopeType.SINGLETON)
+    public class SingletonTest {
+        // Les attribut sont initialiser avant chaque appel de la method
+        ...
+    }
+```
  
 ## <b> Remarque </b>
 * Toute les class ayant une method d'action doit avoir des setter qui prend des arguments de type __Primitives__ ou  __Date__ comme argument 

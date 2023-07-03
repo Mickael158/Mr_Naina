@@ -1,8 +1,8 @@
 package test;
 
-import etu1904.framework.ModelView;
-import etu1904.framework.FileUpload;
-import etu1904.framework.MethodAnnotation;
+import etu1784.framework.ModelView;
+import etu1784.framework.FileUpload;
+import etu1784.framework.annotation.ActionMethod;
 
 
 public class Test {
@@ -10,7 +10,7 @@ public class Test {
     private int id;
     private String nom;
 
-    @MethodAnnotation( url = "save.do")
+    @ActionMethod( url = "save.do")
     public ModelView save() {
         ModelView mv = new ModelView();
 
@@ -20,7 +20,7 @@ public class Test {
         return mv;
     }
 
-    @MethodAnnotation( url = "setNewTest.do", paramName = "identifiant,name")
+    @ActionMethod( url = "setNewTest.do", paramName = "identifiant,name")
     public ModelView newTest(int identifiant, String name) {
         ModelView mv = new ModelView();
 
@@ -33,7 +33,7 @@ public class Test {
         return mv;
     }
 
-    @MethodAnnotation( url = "upload.do", paramName = "fu")
+    @ActionMethod( url = "upload.do", paramName = "fu")
     public ModelView upload(FileUpload fu) {
         ModelView mv = new ModelView();
 
