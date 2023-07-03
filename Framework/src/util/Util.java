@@ -7,6 +7,7 @@ import etu1904.framework.ModelView;
 import etu1904.framework.annotation.ActionMethod;
 import etu1904.framework.annotation.Scope;
 import etu1904.framework.type.ScopeType;
+import etu1904.framework.annotation.Auth;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
@@ -26,14 +27,21 @@ import java.util.ArrayList;
 
 public class Util {
 
-    public ModelView invokeMethod(HttpServletRequest request, Mapping mapping, HashMap<String, Object> singleton) throws Exception {
+    public ModelView invokeMethod(HttpServletRequest request, Mapping mapping, HashMap<String, Object> singleton, String session) throws Exception {
         ArrayList<Class<?>> type = new ArrayList<>();
         ArrayList<Object> value = new ArrayList<>();
         this.setArgValue(request, mapping, type, value);
 
         Object o = this.setObjectByRequest(request, mapping, singleton);
 
-        return (ModelView) o.getClass().getMethod(mapping.getMethod(), type.toArray(Class[]::new)).invoke(o, value.toArray(Object[]::new));
+        Method m = o.getClass().getMethod(mapping.getMethod(), type.toArray(Class[]::new));
+        if(m.isAnnotationPresent(Auth.class)){
+            String[] allPermission = m.getAnnotation(Auth.class).profil().split(",");
+            String userPermission = String.valueOf(request.getSession().getAttribute(session));
+            if (isIn(allPermission, userPermission)) {
+                return (ModelView) m.invoke(o, value.toArray(Object[]::new));
+            }else throw new Exception("Permission denid");
+        }else return (ModelView) m.invoke(o, value.toArray(Object[]::new));
     }
 
     public void setArgValue(HttpServletRequest request, Mapping mapping, ArrayList<Class<?>> type, ArrayList<Object> value) throws Exception {
@@ -208,11 +216,17 @@ public class Util {
         return url_input.substring(ctx_ind + ctx.length());
     }
 
+    public boolean isIn(String[] data, String find) {
+        for (String s : data) {
+            if(s.trim().equals(find)) return true;
+        }
+        return false;
+    }
+
     public String casse(String input) {
         char[] strrep = input.toCharArray();
         strrep[0] = Character.toUpperCase(strrep[0]);
 
         return new String(strrep);
     }
-
 }
