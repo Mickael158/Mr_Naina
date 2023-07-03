@@ -11,6 +11,10 @@
   <servlet>
         <servlet-name>FrontServlet</servlet-name>
         <servlet-class>etu1784.framework.servlet.FrontServlet</servlet-class>
+        <init-param>
+            <param-name>session</param-name>
+            <param-value>session</param-value>
+        </init-param>
     </servlet>
 
     <servlet-mapping>
