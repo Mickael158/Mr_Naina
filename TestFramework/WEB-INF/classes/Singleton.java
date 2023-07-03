@@ -1,10 +1,10 @@
 package test;
 
 
-import etu1904.framework.annotation.ActionMethod;
+import etu1904.framework.annotation.Scope;
 import etu1904.framework.type.ScopeType;
 import etu1904.framework.ModelView;
-import etu1904.framework.MethodAnnotation;
+import etu1904.framework.annotation.ActionMethod;
 
 import test.Test;
 
@@ -12,7 +12,7 @@ import test.Test;
 public class Singleton {
     private int test;
 
-    @MethodAnnotation( url = "s.do")
+    @ActionMethod( url = "s.do")
     public ModelView save() {
         ModelView mv = new ModelView();
 
@@ -36,5 +36,5 @@ public class Singleton {
     public void setTest(int test) {
         this.test = test;
     }
-    
+
 }
