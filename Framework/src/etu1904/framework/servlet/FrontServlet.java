@@ -39,8 +39,6 @@ public class FrontServlet extends HttpServlet {
             String path = getServletContext().getRealPath(tomPath);
             util.loadMapping(path, tomPath, mappingUrls, singleton);
 
-            System.out.println(this.sessionVariable);
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

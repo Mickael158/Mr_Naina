@@ -2,7 +2,8 @@ package test;
 
 import etu1904.framework.ModelView;
 import etu1904.framework.FileUpload;
-import etu1904.framework.MethodAnnotation;
+import etu1904.framework.annotation.ActionMethod;
+import etu1904.framework.annotation.Auth;
 
 
 public class Test {
@@ -10,7 +11,18 @@ public class Test {
     private int id;
     private String nom;
 
-    @MethodAnnotation( url = "save.do")
+    @ActionMethod( url = "login.do", paramName="profil")
+    public ModelView test(String profil) {
+        ModelView mv = new ModelView();
+
+        mv.setView("/index.jsp");
+        mv.addSession("userProfil", profil);
+
+        return mv;
+    }
+
+    @Auth( profil = "admin")
+    @ActionMethod( url = "save.do")
     public ModelView save() {
         ModelView mv = new ModelView();
 
@@ -20,12 +32,13 @@ public class Test {
         return mv;
     }
 
-    @MethodAnnotation( url = "setNewTest.do", paramName = "identifiant,name")
+    @Auth( profil = "admin,simple")
+    @ActionMethod( url = "setNewTest.do", paramName = "identifiant,name")
     public ModelView newTest(int identifiant, String name) {
         ModelView mv = new ModelView();
 
         this.setId(identifiant);
-        this.setNom(name); 
+        this.setNom(name);
 
         mv.setView("/test.jsp");
         mv.addItem("obj", this);
@@ -33,12 +46,12 @@ public class Test {
         return mv;
     }
 
-    @MethodAnnotation( url = "upload.do", paramName = "fu")
+    @ActionMethod( url = "upload.do", paramName = "fu")
     public ModelView upload(FileUpload fu) {
         ModelView mv = new ModelView();
 
         this.setId(0);
-        this.setNom("Elyse"); 
+        this.setNom("Elyse");
 
         mv.setView("/test.jsp");
         mv.addItem("obj", this);
@@ -53,7 +66,7 @@ public class Test {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getNom() {
         return this.nom;
     }
