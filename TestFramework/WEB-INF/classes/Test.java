@@ -11,17 +11,7 @@ public class Test {
     private int id;
     private String nom;
 
-    @ActionMethod( url = "login.do", paramName="profil")
-    public ModelView test(String profil) {
-        ModelView mv = new ModelView();
 
-        mv.setView("/index.jsp");
-        mv.addSession("userProfil", profil);
-
-        return mv;
-    }
-
-    @Auth( profil = "admin")
     @ActionMethod( url = "save.do")
     public ModelView save() {
         ModelView mv = new ModelView();
